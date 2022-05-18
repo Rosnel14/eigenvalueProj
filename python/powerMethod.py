@@ -8,9 +8,9 @@ def normalize(x):
     x_n = x / x.max()
     return fac, x_n
 
-def main():
-    x = np.array([1, 1])
-    a = np.array([[0, 2], [2, 3]])
+x = np.array([1, 1])
+a = np.array([[0, 2],
+              [2, 3]])
 
 for i in range(8):
     x = np.dot(a, x)
@@ -18,8 +18,3 @@ for i in range(8):
 
 print('Eigenvalue:', lambda_1)
 print('Eigenvector:', x)
-
-
-
-if __name__ == "__main__":
-    main()
