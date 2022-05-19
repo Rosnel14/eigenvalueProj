@@ -1,20 +1,66 @@
 import numpy as np
+import sys
+import time
+
+# Reading order of matrix
+n = int(input('Enter order of matrix: '))
+
+# Making numpy array of n x n size and initializing
+# to zero for storing matrix
+a = np.zeros((n,n))
+
+# Reading matrix
+print('Enter Matrix Coefficients:')
+for i in range(n):
+    for j in range(n):
+        a[i][j] = float(input( 'a['+str(i)+']['+ str(j)+']='))
+
+# Making numpy array n x 1 size and initializing to zero
+# for storing initial guess vector
+x = np.zeros((n))
+
+# Reading initial guess vector
+print('Enter initial guess vector: ')
+for i in range(n):
+    x[i] = float(input( 'x['+str(i)+']='))
+
+# Reading tolerable error
+tolerable_error = float(input('Enter tolerable error: '))
+
+# Reading maximum number of steps
+max_iteration = int(input('Enter maximum number of steps: '))
 
 
-#factors out largest element in vector
-#effectively making it = 1
-def normalize(x):
-    fac = abs(x).max()
-    x_n = x / x.max()
-    return fac, x_n
+#start time
+start_time = time.time()
 
-x = np.array([1, 1])
-a = np.array([[0, 2],
-              [2, 3]])
+# Power Method Implementation
+lambda_old = 1.0
+condition =  True
+step = 1
+while condition:
+    # Multiplying a and x
+    x = np.matmul(a,x)
 
-for i in range(8):
-    x = np.dot(a, x)
-    lambda_1, x = normalize(x)
+    # Finding new Eigen value and Eigen vector
+    lambda_new = max(abs(x))
 
-print('Eigenvalue:', lambda_1)
-print('Eigenvector:', x)
+    x = x/lambda_new
+
+    # Displaying Eigen value and Eigen Vector
+    print('\nSTEP %d' %(step))
+    print('----------')
+    print('Eigen Value = %0.4f' %(lambda_new))
+    print('Eigen Vector: ')
+    for i in range(n):
+        print('%0.3f\t' % (x[i]))
+
+    # Checking maximum iteration
+    step = step + 1
+    if step > max_iteration:
+        end_time = time.time()
+        break
+
+#checking time
+resultant = end_time - start_time
+print('Compilation Time: %f' %resultant)
