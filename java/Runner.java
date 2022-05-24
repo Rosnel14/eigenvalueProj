@@ -7,11 +7,12 @@ import java.math.*;
 
 public class Runner {
 	
-int[][] A;
+double[][] A;
 double previousDominantEigenValue;
 double dominantEigenValue = 1;
 double[] vector;
 double[] newVector;
+double x;
 int n;
 boolean changed = true;
 Scanner sc;
@@ -20,12 +21,18 @@ Scanner sc;
 	}
 	
 	public void run() {
-		double x = getDominantEigenvalue();
+		createVectorAndMatrix();
+		final long startTime = System.currentTimeMillis();
+		for(int i = 0; i<1000000; i++) {
+			x = getDominantEigenvalue();
+		}
 		System.out.println("The dominant Eigenvalue is " + x);
+		final long endTime = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (endTime - startTime));
 	}	
 
 	public double getDominantEigenvalue() {
-		createVectorAndMatrix();
+		//System.out.println("done");
 		while(Math.abs(previousDominantEigenValue - dominantEigenValue) > 0.0001) {
 			previousDominantEigenValue = dominantEigenValue;
 			dominantEigenValue = 0;
@@ -55,7 +62,7 @@ Scanner sc;
 		sc = new Scanner(System.in);
 		System.out.println("Please enter n for the nxn matrix");
 		n = sc.nextInt();
-		A = new int[n][n];	
+		A = new double[n][n];	
 		vector = new double[n];
 		newVector = new double[n];
 		vector[0] = 1; 	
@@ -65,7 +72,7 @@ Scanner sc;
 		System.out.println("Enter matrix numbers");
 		for (int i = 0; i<n; i++) {
 			for (int j = 0; j<n; j++) {
-				A[i][j] = sc.nextInt();
+				A[i][j] = sc.nextDouble();
 			}
 		}
 	}
